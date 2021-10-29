@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>playcea options</title>
+</head>
+
+<body>
+
+  <p>left-click option:</p>
+
+  <div>
+    <input type="radio" id="tab" name="clickbehavior" value="tab" checked>
+    <label for="tab">Open in new tab</label>
+  </div>
+
+  <div>
+    <input type="radio" id="window" name="clickbehavior" value="window">
+    <label for="window">Open in new window</label>
+  </div>
+
+  <div>
+    <input type="radio" id="clipboard" name="clickbehavior" value="clipboard">
+    <label for="clipboard">Copy to clipboard</label>
+  </div>
+
+  <br />
+  <div id="status"></div>
+  <button id="save">Save</button>
+  <script src="options.js"></script>
+</body>
+
+</html>

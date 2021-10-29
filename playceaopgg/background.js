@@ -4,10 +4,38 @@ function getopgg() {
 }
 
 chrome.action.onClicked.addListener((tab) => {
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: getopgg
-  }, function ([{ result }]) {
-    chrome.tabs.create({ url: result });
+  chrome.storage.sync.get({
+    clickbehavior: 'tab',
+  }, function (items) {
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      function: getopgg
+    }, function ([{ result }]) {
+      switch (items.clickbehavior) {
+        case "tab": {
+          chrome.tabs.create({ url: result });
+          break;
+        }
+        case "window": {
+          chrome.windows.create({ url: result });
+          break;
+        }
+        case "clipboard": {
+          chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            args: [result],
+            func: function copy(text) {
+              var input = document.createElement('textarea');
+              input.innerHTML = text;
+              document.body.appendChild(input);
+              input.select();
+              var result = document.execCommand('copy');
+              document.body.removeChild(input);
+              return result;
+            }
+          })
+        }
+      }
+    });
   });
 });
