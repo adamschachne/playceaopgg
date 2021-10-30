@@ -11,6 +11,10 @@
     "tabs",
     "storage"
   ],
-  "action": {},
+  "action": {
+    "default_icon": {
+      "32": "images/icon-inactive.png"
+    }
+  },
   "options_page": "options.html"
 }
