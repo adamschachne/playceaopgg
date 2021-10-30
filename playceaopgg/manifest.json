@@ -9,7 +9,8 @@
     "activeTab",
     "scripting",
     "tabs",
-    "storage"
+    "storage",
+    "webNavigation"
   ],
   "action": {
     "default_icon": {
