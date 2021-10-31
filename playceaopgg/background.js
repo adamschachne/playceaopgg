@@ -16,6 +16,16 @@ function checkSummonerNames() {
   return true
 }
 
+const executeCheckSummonerNames = (tab) => {
+  return new Promise((res, rej) => {
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      function: checkSummonerNames
+    }, ([{ result }]) => { res(result) });
+  })
+
+}
+
 const changeListener = async () => {
   let queryOptions = { active: true, currentWindow: true };
   let [tab] = await chrome.tabs.query(queryOptions);
@@ -42,7 +52,9 @@ chrome.tabs.onActivated.addListener(changeListener)
 chrome.action.onClicked.addListener((tab) => {
   chrome.storage.sync.get({
     clickbehavior: 'tab',
-  }, function (items) {
+  }, async function (items) {
+    let validDOM = await executeCheckSummonerNames(tab);
+    if (!validDOM) return
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       function: getopgg
